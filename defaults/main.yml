@@ -1,2 +1,4 @@
 ---
 # defaults file for shibboleth-sp
+shib_config_dir:      "/etc/shibboleth"
+shib_hostname:           "{{ hostname | default('myapp') }}"

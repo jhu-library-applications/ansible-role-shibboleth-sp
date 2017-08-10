@@ -1,0 +1,26 @@
+---
+- name: add shibboeth repo - CentOS
+  yum_repository:
+    name: shibboleth
+    description: "shibboleth repo"
+    baseurl: http://download.opensuse.org/repositories/security:/shibboleth/CentOS_7/
+    gpgkey: http://download.opensuse.org/repositories/security:/shibboleth/CentOS_7/repodata/repomd.xml.key
+    gpgcheck: yes
+    enabled: yes
+  when: ansible_os_family == 'RedHat'
+
+- name: install shibboleth-sp
+  yum:
+    name: shibboleth
+    enablerepo: shibboleth
+    state: present
+    disable_gpg_check: true
+
+  # TODO: apply something a little more nuanced than hardcoding "01_" prefix
+- name: insert apache config to protect endpoint
+  blockinfile:
+    block:  "{{ lookup('template', 'shib_virtualhost.j2') }}"
+    dest: "/etc/httpd/conf.d/01_{{ shib_hostname }}.conf"
+    marker: "# {mark} shib configs"
+    insertbefore: "</VirtualHost>"
+  notify: restart apache

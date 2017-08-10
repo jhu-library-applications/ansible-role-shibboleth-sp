@@ -1,0 +1,41 @@
+---
+- name : create sp-cert from vault 
+  no_log: true
+  copy :
+    content: "{{ shib_sp_cert }}"
+    dest : "{{ shib_config_dir }}/sp-cert.pem"
+    mode  : 0600
+  when: shib_sp_cert is defined
+  notify: restart shibd
+
+- name : create sp-key from vault
+  no_log: true
+  copy :
+    content: "{{ shib_sp_key }}"
+    dest : "{{ shib_config_dir }}/sp-key.pem"
+    mode  : 0600
+  when: shib_sp_key is defined
+  notify: restart shibd
+
+- name : create idp-metadata from vault 
+  no_log: true
+  copy :
+    content: "{{ shib_idp_metadata_xml }}"
+    dest : "{{ shib_config_dir }}/idp-metadata.xml"
+    mode  : "u=rw,g=r,o=r"
+  when: shib_idp_metadata_xml is defined
+  notify: restart shibd
+
+- name : config attributes from template 
+  template :
+    src  : "attribute-map.xml.j2"
+    dest : "{{ shib_config_dir }}/attribute-map.xml"
+    mode  : "u=rw,g=r,o=r"
+  notify: restart shibd
+
+- name : config shib from template 
+  template :
+    src  : "shibboleth2.xml.j2"
+    dest : "{{ shib_config_dir }}/shibboleth2.xml"
+    mode  : "u=rw,g=r,o=r"
+  notify: restart shibd

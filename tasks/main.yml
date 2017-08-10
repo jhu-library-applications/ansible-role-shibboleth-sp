@@ -1,25 +1,7 @@
 ---
-- name: add shibboeth repo - CentOS
-  yum_repository:
-    name: shibboleth
-    description: "shibboleth repo"
-    baseurl: http://download.opensuse.org/repositories/security:/shibboleth/CentOS_7/
-    gpgkey: http://download.opensuse.org/repositories/security:/shibboleth/CentOS_7/repodata/repomd.xml.key
-    gpgcheck: yes
-    enabled: yes
-  when: ansible_os_family == 'RedHat'
+- include: 'install.yml'
   become: true
 
-- name: update yum
-  command: "yum update -y"
-  register: result
-  changed_when: "'No packages marked for update' not in result.stdout"
+- include: 'configure.yml'
   become: true
 
-- name: install shibboleth-sp
-  yum:
-    name: shibboleth
-    enablerepo: shibboleth
-    state: present
-    disable_gpg_check: true
-  become: true
