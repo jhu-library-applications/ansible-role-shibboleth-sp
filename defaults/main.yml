@@ -2,3 +2,6 @@
 # defaults file for shibboleth-sp
 shib_config_dir:      "/etc/shibboleth"
 shib_hostname:           "{{ hostname | default('myapp') }}"
+
+apache_config_file:    "/etc/httpd/conf.d/01_{{ shib_hostname }}.conf"
+

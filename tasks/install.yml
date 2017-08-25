@@ -20,7 +20,7 @@
 - name: insert apache config to protect endpoint
   blockinfile:
     block:  "{{ lookup('template', 'shib_virtualhost.j2') }}"
-    dest: "/etc/httpd/conf.d/01_{{ shib_hostname }}.conf"
+    dest: "{{ apache_config_file }}"
     marker: "# {mark} shib configs"
     insertbefore: "</VirtualHost>"
   notify: restart apache
