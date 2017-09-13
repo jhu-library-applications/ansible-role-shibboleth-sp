@@ -3,8 +3,8 @@
   yum_repository:
     name: shibboleth
     description: "shibboleth repo"
-    baseurl: http://download.opensuse.org/repositories/security:/shibboleth/CentOS_7/
-    gpgkey: http://download.opensuse.org/repositories/security:/shibboleth/CentOS_7/repodata/repomd.xml.key
+    baseurl:  "{{ shib_repo_baseurl }}"
+    gpgkey:   "{{ shib_repo_gpgkey }}"
     gpgcheck: yes
     enabled: yes
   when: ansible_os_family == 'RedHat'

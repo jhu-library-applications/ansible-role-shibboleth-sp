@@ -2,6 +2,10 @@
 # defaults file for shibboleth-sp
 shib_config_dir:      "/etc/shibboleth"
 shib_hostname:           "{{ hostname | default('myapp') }}"
+# NOTE: apparently, in current versions of ansible (> 2.3.1, at least),
+# baseurl (the property for which this var is the value) can be a list
+# TODO: update ansible and test list value
+shib_repo_baseurl:    "http://download.opensuse.org/repositories/security:/shibboleth/CentOS_7/"
+shib_repo_gpgkey:     "http://download.opensuse.org/repositories/security:/shibboleth/CentOS_7/repodata/repomd.xml.key"
 
 apache_config_file:    "/etc/httpd/conf.d/01_{{ shib_hostname }}.conf"
-
