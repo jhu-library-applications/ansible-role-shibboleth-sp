@@ -1,9 +1,12 @@
 ---
-- name: add shibboeth repo - CentOS
+# TODO: handle more than just Centos 7
+# NOTE: at present, Centos 7 yum install is incompatible with everything else:
+# https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPLinuxRPMInstall
+- name: add shibboeth repo - CentOS 7
   yum_repository:
     name: shibboleth
-    description: "shibboleth repo"
-    baseurl:  "{{ shib_repo_baseurl }}"
+    description: "Shibboleth (CentOS_7)"
+    mirrorlist: "{{ shib_repo_mirrorlist }}"
     gpgkey:   "{{ shib_repo_gpgkey }}"
     gpgcheck: yes
     enabled: yes
@@ -11,16 +14,6 @@
 
 - name: install shibboleth-sp
   yum:
-    name: shibboleth
+    name: "{{ shib_package }}"
     enablerepo: shibboleth
     state: present
-    disable_gpg_check: true
-
-  # TODO: apply something a little more nuanced than hardcoding "01_" prefix
-- name: insert apache config to protect endpoint
-  blockinfile:
-    block:  "{{ lookup('template', 'shib_virtualhost.j2') }}"
-    dest: "{{ apache_config_file }}"
-    marker: "# {mark} shib configs"
-    insertbefore: "</VirtualHost>"
-  notify: restart apache
