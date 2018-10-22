@@ -7,5 +7,6 @@ shib_hostname:           "{{ hostname | default('myapp') }}"
 # TODO: update ansible and test list value
 shib_repo_baseurl:    "http://download.opensuse.org/repositories/security:/shibboleth/CentOS_7/"
 shib_repo_gpgkey:     "http://download.opensuse.org/repositories/security:/shibboleth/CentOS_7/repodata/repomd.xml.key"
-
+shib_user:            "shibd"
+shib_group:           "shibd"
 apache_config_file:    "/etc/httpd/conf.d/01_{{ shib_hostname }}.conf"
