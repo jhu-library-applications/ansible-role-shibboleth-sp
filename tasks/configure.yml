@@ -45,7 +45,7 @@
 
 - name : config attributes from template
   no_log: "{{ not shib_debugging }}"
-  copy :
+  template :
     src  : "{{ shib_attribute_template }}"
     dest : "{{ shib_config_dir }}/attribute-map.xml"
     mode  : "u=rw,g=r,o=r"
@@ -55,7 +55,7 @@
 
 - name : config shib from template
   no_log: "{{ not shib_debugging }}"
-  copy :
+  template :
     src  : "{{ shib_config_template }}"
     dest : "{{ shib_config_dir }}/shibboleth2.xml"
     mode  : "u=rw,g=r,o=r"
