@@ -1,7 +1,8 @@
 ---
 - include: 'install.yml'
   become: true
+  become_user: root
 
 - include: 'configure.yml'
   become: true
-
+  become_user: root

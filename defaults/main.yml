@@ -13,4 +13,6 @@ shib_config_template:       "shibboleth2.xml.dist.j2"
 shib_repo_mirrorlist: "https://shibboleth.net/cgi-bin/mirrorlist.cgi/CentOS_7"
 shib_repo_gpgkey:     "https://downloadcontent.opensuse.org/repositories/security:/shibboleth/CentOS_7/repodata/repomd.xml.key"
 
+shib_user:            "shibd"
+shib_group:           "shibd"
 apache_config_file:    "/etc/httpd/conf.d/01_{{ shib_hostname }}.conf"

@@ -14,7 +14,9 @@
   copy :
     content: "{{ shib_sp_cert }}"
     dest : "{{ shib_config_dir }}/sp-cert.pem"
-    mode  : 0600
+    mode  : 0640
+    owner : "{{ shib_user }}"
+    group : "{{ shib_group }}"
   when: shib_sp_cert is defined
   notify: restart shibd
 
@@ -24,6 +26,8 @@
     content: "{{ shib_sp_key }}"
     dest : "{{ shib_config_dir }}/sp-key.pem"
     mode  : 0600
+    owner : "{{ shib_user }}"
+    group : "{{ shib_group }}"
   when: shib_sp_key is defined
   notify: restart shibd
 
