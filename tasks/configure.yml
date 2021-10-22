@@ -1,7 +1,7 @@
 ---
 # TODO: apply something a little more nuanced than hardcoding "01_" prefix
 - name: insert apache config to protect endpoint
-  no_log: "{{ not shib_debugging }}"
+  #no_log: "{{ not shib_debugging }}"
   blockinfile:
     block: "{{ lookup('template', shib_virtualhost_template) }}"
     dest: "{{ apache_config_file }}"
@@ -10,7 +10,7 @@
   notify: restart apache
 
 - name : create sp-cert from vault
-  no_log: "{{ not shib_debugging }}"
+  #no_log: "{{ not shib_debugging }}"
   copy :
     content: "{{ shib_sp_cert }}"
     dest : "{{ shib_config_dir }}/sp-cert.pem"
@@ -21,7 +21,7 @@
   notify: restart shibd
 
 - name : create sp-key from vault
-  no_log: "{{ not shib_debugging }}"
+  #no_log: "{{ not shib_debugging }}"
   copy :
     content: "{{ shib_sp_key }}"
     dest : "{{ shib_config_dir }}/sp-key.pem"
@@ -32,7 +32,7 @@
   notify: restart shibd
 
 - name : create idp-metadata from vault
-  no_log: "{{ not shib_debugging }}"
+  #no_log: "{{ not shib_debugging }}"
   copy :
     content: "{{ item.content | default(omit) }}"
     src: "{{ item.src | default(omit) }}"
@@ -44,7 +44,7 @@
   with_items: "{{ shib_idp_metadata }}"
 
 - name : config attributes from template
-  no_log: "{{ not shib_debugging }}"
+  #no_log: "{{ not shib_debugging }}"
   template :
     src  : "{{ shib_attribute_template }}"
     dest : "{{ shib_config_dir }}/attribute-map.xml"
@@ -54,7 +54,7 @@
   notify: restart shibd
 
 - name : config shib from template
-  no_log: "{{ not shib_debugging }}"
+  #no_log: "{{ not shib_debugging }}"
   template :
     src  : "{{ shib_config_template }}"
     dest : "{{ shib_config_dir }}/shibboleth2.xml"
